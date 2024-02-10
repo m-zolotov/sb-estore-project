@@ -1,18 +1,21 @@
-import Catalog from '../../pages/Catalog';
+import { useState, ChangeEvent } from 'react';
 import Header from '../Header';
 import Footer from '../Footer';
-import data from '../../fixtures/data.json';
-import { GoodsContext } from '../../context/goods-context';
+import Catalog from '../../pages/Catalog';
+import { SearchContext } from '../../context/search-context';
 
 const AppContent = () => {
-	const cards = data;
+	const [search, setSearch] = useState<string>('');
+	const handleChangeSearch = (newSearch: ChangeEvent<HTMLInputElement>) =>
+		setSearch(newSearch.target.value);
+	const searchResult = { search, handleChangeSearch };
 
 	return (
-		<GoodsContext.Provider value={cards}>
+		<SearchContext.Provider value={searchResult}>
 			<Header />
 			<Catalog />
 			<Footer />
-		</GoodsContext.Provider>
+		</SearchContext.Provider>
 	);
 };
 

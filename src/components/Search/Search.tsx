@@ -1,6 +1,8 @@
+import { useContext, ChangeEvent } from 'react';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import { styled, alpha } from '@mui/material/styles';
+import { SearchContext } from '../../context/search-context';
 
 const SearchComponent = styled('div')(({ theme }) => ({
 	position: 'relative',
@@ -48,9 +50,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const Search = () => {
-	const handleChange = (value: string) => {
-		console.log('---', value);
-	};
+	const { search, handleChangeSearch } = useContext(SearchContext);
 
 	return (
 		<SearchWrapper>
@@ -61,7 +61,8 @@ const Search = () => {
 				<StyledInputBase
 					placeholder='Поиск'
 					inputProps={{ 'aria-label': 'search' }}
-					onChange={(e) => handleChange(e.target.value)}
+					onChange={(e: ChangeEvent<HTMLInputElement>) => handleChangeSearch(e)}
+					value={search}
 				/>
 			</SearchComponent>
 		</SearchWrapper>
