@@ -4,10 +4,11 @@ import spacing from '../../shared/spacing';
 
 const theme = createTheme({
 	components: {
-		MuiStack: {
+		MuiPagination: {
 			styleOverrides: {
 				root: {
-					marginBottom: spacing(2),
+					paddingTop: spacing(2),
+					paddingBottom: spacing(2),
 				},
 			},
 		},

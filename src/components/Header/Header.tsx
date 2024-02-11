@@ -9,9 +9,7 @@ import Stack from '@mui/material/Stack';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import MailIcon from '@mui/icons-material/Mail';
-import NotificationsIcon from '@mui/icons-material/Notifications';
+import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Brand from '../Brand';
@@ -19,6 +17,8 @@ import Search from '../Search';
 import Logo from '../Logo';
 import { bg } from '../../shared/colors';
 import spacing from '../../shared/spacing';
+import { ReactComponent as IconCart } from '../../assets/images/ic-cart.svg';
+import { ReactComponent as IconFavorites } from '../../assets/images/ic-favorites.svg';
 
 const theme = createTheme({
 	components: {
@@ -107,7 +107,7 @@ export default function Header() {
 			<MenuItem>
 				<IconButton size='large' aria-label='show 4 new mails' color='inherit'>
 					<Badge badgeContent={4} color='error'>
-						<MailIcon />
+						<IconFavorites />
 					</Badge>
 				</IconButton>
 				<p>Messages</p>
@@ -118,7 +118,7 @@ export default function Header() {
 					aria-label='show 17 new notifications'
 					color='inherit'>
 					<Badge badgeContent={17} color='error'>
-						<NotificationsIcon />
+						<IconCart />
 					</Badge>
 				</IconButton>
 				<p>Notifications</p>
@@ -130,7 +130,7 @@ export default function Header() {
 					aria-controls='primary-search-account-menu'
 					aria-haspopup='true'
 					color='inherit'>
-					<AccountCircle />
+					<SentimentSatisfiedAltIcon />
 				</IconButton>
 				<p>Profile</p>
 			</MenuItem>
@@ -155,7 +155,7 @@ export default function Header() {
 									aria-label='show 4 new mails'
 									color='inherit'>
 									<Badge badgeContent={4} color='error'>
-										<MailIcon />
+										<IconFavorites />
 									</Badge>
 								</IconButton>
 								<IconButton
@@ -163,7 +163,7 @@ export default function Header() {
 									aria-label='show 17 new notifications'
 									color='inherit'>
 									<Badge badgeContent={17} color='error'>
-										<NotificationsIcon />
+										<IconCart />
 									</Badge>
 								</IconButton>
 								<IconButton
@@ -174,7 +174,7 @@ export default function Header() {
 									aria-haspopup='true'
 									onClick={handleProfileMenuOpen}
 									color='inherit'>
-									<AccountCircle />
+									<SentimentSatisfiedAltIcon />
 								</IconButton>
 							</Box>
 							<Box sx={{ display: { xs: 'flex', md: 'none' } }}>
