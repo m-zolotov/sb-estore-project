@@ -42,10 +42,6 @@ const theme = createTheme({
 	},
 });
 
-// type IHeaderProps = {
-// 	setSearchResult: (e: React.ChangeEvent) => void;
-// };
-
 export default function Header() {
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 	const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =

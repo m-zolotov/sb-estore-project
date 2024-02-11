@@ -10,7 +10,7 @@ import data from '../../fixtures/data.json';
 const Catalog = () => {
 	const cards = data;
 	const { search } = useContext(SearchContext);
-	const [filteredData, setFilteredData] = useState<ICard[]>(data);
+	const [filteredData, setFilteredData] = useState<ICard[]>(data); // filteredData
 	useEffect(() => {
 		setFilteredData(
 			data.filter((card: ICard) =>
