@@ -3,7 +3,7 @@ import Grid from '@mui/material/Grid';
 import Card from '../Card';
 import Skeleton from '../../components/Skeleton';
 import Pagination from '../../components/Pagination';
-import { ICard } from '../../types/ICard';
+import { ICard } from '../../types/interfaces';
 import usePagination from '../../hooks/usePagination';
 
 type ICardListProps = {

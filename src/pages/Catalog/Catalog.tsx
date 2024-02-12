@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import CardList from '../../components/CardList';
 import PageHeader from '../../components/PageHeader';
-import { ICard } from '../../types/ICard';
+import { ICard } from '../../types/interfaces';
 import { SearchContext } from '../../context/search-context';
 import data from '../../fixtures/data.json';
 

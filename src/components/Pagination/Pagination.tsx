@@ -7,8 +7,8 @@ const theme = createTheme({
 		MuiPagination: {
 			styleOverrides: {
 				root: {
-					paddingTop: spacing(2),
-					paddingBottom: spacing(2),
+					paddingTop: spacing(4),
+					paddingBottom: spacing(6),
 				},
 			},
 		},

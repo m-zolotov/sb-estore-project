@@ -4,7 +4,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Chip from '@mui/material/Chip';
 import { Button, CardActionArea, CardHeader, CardActions } from '@mui/material';
 import { ThemeProvider, createTheme, styled } from '@mui/material/styles';
-import { ICard } from '../../types/ICard';
+import { ICard } from '../../types/interfaces';
 import { colors, bg } from '../../shared/colors';
 import spacing from '../../shared/spacing';
 import { ReactComponent as Favorites } from '../../assets/images/ic-favorites.svg';

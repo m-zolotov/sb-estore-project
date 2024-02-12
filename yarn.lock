@@ -1277,11 +1277,6 @@
   resolved "https://registry.npmjs.org/@eslint/js/-/js-8.56.0.tgz"
   integrity sha512-gMsVel9D7f2HLkBma9VbtzZRehRogVRfbr++f06nL2vnCGCNlzOD+/MUov/F4p8myyAHspEhVobgjpX64q5m6A==
 
-"@expo-google-fonts/nunito@^0.2.3":
-  version "0.2.3"
-  resolved "https://registry.npmjs.org/@expo-google-fonts/nunito/-/nunito-0.2.3.tgz"
-  integrity sha512-z+Bx3IuT0t3jguoMxiyWuC7pW3wDVNHgYko/G9V23QhR/yDSjEsT+Kx+VGDT/hu9TXSxw3CtpQ5MFHikqSVDYw==
-
 "@floating-ui/core@^1.6.0":
   version "1.6.0"
   resolved "https://registry.npmjs.org/@floating-ui/core/-/core-1.6.0.tgz"
@@ -1537,6 +1532,11 @@
   version "2.11.8"
   resolved "https://registry.npmjs.org/@popperjs/core/-/core-2.11.8.tgz"
   integrity sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==
+
+"@remix-run/router@1.15.0":
+  version "1.15.0"
+  resolved "https://registry.npmjs.org/@remix-run/router/-/router-1.15.0.tgz"
+  integrity sha512-HOil5aFtme37dVQTB6M34G95kPM3MMuqSmIRVCC52eKV+Y/tGSqw9P3rWhlAx6A+mz+MoX+XxsGsNJbaI5qCgQ==
 
 "@svgr/babel-plugin-add-jsx-attribute@8.0.0":
   version "8.0.0"
@@ -6221,7 +6221,7 @@ raw-body@2.5.1:
     iconv-lite "0.4.24"
     unpipe "1.0.0"
 
-"react-dom@^17.0.0 || ^18.0.0", react-dom@^18.2.0, "react-dom@>= 16.8.0", react-dom@>=16.6.0, react-dom@>=16.8.0:
+"react-dom@^17.0.0 || ^18.0.0", react-dom@^18.2.0, "react-dom@>= 16.8.0", react-dom@>=16.6.0, react-dom@>=16.8, react-dom@>=16.8.0:
   version "18.2.0"
   resolved "https://registry.npmjs.org/react-dom/-/react-dom-18.2.0.tgz"
   integrity sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==
@@ -6244,6 +6244,21 @@ react-refresh@^0.14.0, "react-refresh@>=0.10.0 <1.0.0":
   resolved "https://registry.npmjs.org/react-refresh/-/react-refresh-0.14.0.tgz"
   integrity sha512-wViHqhAd8OHeLS/IRMJjTSDHF3U9eWi62F/MledQGPdJGDhodXJ9PBLNGr6WWL7qlH12Mt3TyTpbS+hGXMjCzQ==
 
+react-router-dom@^6.22.0:
+  version "6.22.0"
+  resolved "https://registry.npmjs.org/react-router-dom/-/react-router-dom-6.22.0.tgz"
+  integrity sha512-z2w+M4tH5wlcLmH3BMMOMdrtrJ9T3oJJNsAlBJbwk+8Syxd5WFJ7J5dxMEW0/GEXD1BBis4uXRrNIz3mORr0ag==
+  dependencies:
+    "@remix-run/router" "1.15.0"
+    react-router "6.22.0"
+
+react-router@6.22.0:
+  version "6.22.0"
+  resolved "https://registry.npmjs.org/react-router/-/react-router-6.22.0.tgz"
+  integrity sha512-q2yemJeg6gw/YixRlRnVx6IRJWZD6fonnfZhN1JIOhV2iJCPeRNSH3V1ISwHf+JWcESzLC3BOLD1T07tmO5dmg==
+  dependencies:
+    "@remix-run/router" "1.15.0"
+
 react-transition-group@^4.4.5:
   version "4.4.5"
   resolved "https://registry.npmjs.org/react-transition-group/-/react-transition-group-4.4.5.tgz"
@@ -6254,7 +6269,7 @@ react-transition-group@^4.4.5:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
-"react@^17.0.0 || ^18.0.0", react@^18.2.0, "react@>= 16.8.0", react@>=16.6.0, react@>=16.8.0:
+"react@^17.0.0 || ^18.0.0", react@^18.2.0, "react@>= 16.8.0", react@>=16.6.0, react@>=16.8, react@>=16.8.0:
   version "18.2.0"
   resolved "https://registry.npmjs.org/react/-/react-18.2.0.tgz"
   integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==
