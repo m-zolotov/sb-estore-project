@@ -25,12 +25,12 @@ const CardList = ({ cards }: ICardListProps) => {
 						<>
 							<Grid
 								item
+								key={item._id}
 								sx={{ display: 'flex' }}
 								xs={12}
 								sm={6}
 								md={4}
-								lg={3}
-								key={item._id}>
+								lg={3}>
 								<Card card={item} />
 							</Grid>
 						</>

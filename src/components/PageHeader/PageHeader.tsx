@@ -3,6 +3,9 @@ import Typography from '@mui/material/Typography';
 import spacing from '../../shared/spacing';
 
 const theme = createTheme({
+	typography: {
+		fontFamily: 'Nunito, Raleway, Roboto, Arial',
+	},
 	components: {
 		MuiTypography: {
 			styleOverrides: {

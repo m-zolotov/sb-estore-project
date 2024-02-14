@@ -1,13 +1,27 @@
+import React from 'react';
+import {
+	Link as RouterLink,
+	LinkProps as RouterLinkProps,
+} from 'react-router-dom';
+import Button from '@mui/material/Button';
 import MuiCard from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardActionArea from '@mui/material/CardActionArea';
+import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Chip from '@mui/material/Chip';
-import { Button, CardActionArea, CardHeader, CardActions } from '@mui/material';
 import { ThemeProvider, createTheme, styled } from '@mui/material/styles';
 import { ICard } from '../../types/interfaces';
 import { colors, bg } from '../../shared/colors';
 import spacing from '../../shared/spacing';
 import { ReactComponent as Favorites } from '../../assets/images/ic-favorites.svg';
+
+const LinkBehavior = React.forwardRef<any, Omit<RouterLinkProps, 'to'>>(
+	(props, ref) => <RouterLink ref={ref} to='/product' {...props} />
+);
+
+LinkBehavior.displayName = 'LinkBehavior';
 
 const theme = createTheme({
 	components: {
@@ -144,7 +158,7 @@ export default function Card({ card, key }: ICardProps) {
 					image={`${card.pictures}`}
 					alt='dog food'
 				/>
-				<CardActionArea>
+				<CardActionArea component={LinkBehavior}>
 					<CardContent>
 						{/* <OldPriceWrapper>{card.old_price}</OldPriceWrapper> */}
 						<CurrentPriceWrapper>{`${card.price} ₽`}</CurrentPriceWrapper>

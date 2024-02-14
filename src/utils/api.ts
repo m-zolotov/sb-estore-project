@@ -1,5 +1,5 @@
 import { config } from './config';
-import { IUser, IPost, IComment } from '../types/interfaces';
+import { IUser, IPost, IComment } from '../types/interfaces'; // IProduct
 
 type TConfigApi = {
 	baseUrl: string;
@@ -38,6 +38,20 @@ class Api {
 	private getApiUrl(path: string) {
 		return `${this.baseUrl}${path}`;
 	}
+
+	getProductsList() {
+		return fetch(this.getApiUrl('/products'), {
+			headers: this.headers,
+		}).then(this.onResponse);
+	}
+
+	getProductById(productsID: string) {
+		return fetch(this.getApiUrl(`/products/${productsID}`), {
+			headers: this.headers,
+		}).then(this.onResponse);
+	}
+
+	// -------- // --------
 
 	getUserInfo() {
 		return fetch(this.getApiUrl('/users/me'), {
