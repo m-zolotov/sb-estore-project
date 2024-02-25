@@ -1,8 +1,10 @@
 import { useState, ChangeEvent } from 'react';
 import { Outlet } from 'react-router-dom';
+import { Provider } from 'react-redux';
 import Header from '../Header';
 import Footer from '../Footer';
 import { SearchContext } from '../../context/search-context';
+import store from '../../store';
 
 const App = () => {
 	const [search, setSearch] = useState<string>('');
@@ -11,11 +13,13 @@ const App = () => {
 	const searchResult = { search, handleChangeSearch };
 
 	return (
-		<SearchContext.Provider value={searchResult}>
-			<Header />
-			<Outlet />
-			<Footer />
-		</SearchContext.Provider>
+		<Provider store={store}>
+			<SearchContext.Provider value={searchResult}>
+				<Header />
+				<Outlet />
+				<Footer />
+			</SearchContext.Provider>
+		</Provider>
 	);
 };
 

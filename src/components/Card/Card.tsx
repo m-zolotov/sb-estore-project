@@ -17,12 +17,6 @@ import { colors, bg } from '../../shared/colors';
 import spacing from '../../shared/spacing';
 import { ReactComponent as Favorites } from '../../assets/images/ic-favorites.svg';
 
-const LinkBehavior = React.forwardRef<any, Omit<RouterLinkProps, 'to'>>(
-	(props, ref) => <RouterLink ref={ref} to='/product' {...props} />
-);
-
-LinkBehavior.displayName = 'LinkBehavior';
-
 const theme = createTheme({
 	components: {
 		MuiCard: {
@@ -141,6 +135,14 @@ type ICardProps = {
 };
 
 export default function Card({ card, key }: ICardProps) {
+	const LinkBehavior = React.forwardRef<any, Omit<RouterLinkProps, 'to'>>(
+		(props, ref) => (
+			<RouterLink ref={ref} to={`/product/${card._id}`} {...props} />
+		)
+	);
+
+	LinkBehavior.displayName = 'LinkBehavior';
+
 	return (
 		<ThemeProvider theme={theme}>
 			<MuiCard elevation={0} key={key}>

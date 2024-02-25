@@ -19,7 +19,7 @@ const theme = createTheme({
 });
 
 type ICardListProps = {
-	title: string;
+	title?: string;
 };
 
 const PageHeader = ({ title, ...props }: ICardListProps) => {
