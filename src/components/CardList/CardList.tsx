@@ -3,7 +3,7 @@ import Grid from '@mui/material/Grid';
 import Card from '../Card';
 import Skeleton from '../../components/Skeleton';
 import Pagination from '../../components/Pagination';
-import { ICard } from '../../types/ICard';
+import { ICard } from '../../types/interfaces';
 import usePagination from '../../hooks/usePagination';
 
 type ICardListProps = {
@@ -25,12 +25,12 @@ const CardList = ({ cards }: ICardListProps) => {
 						<>
 							<Grid
 								item
+								key={item._id}
 								sx={{ display: 'flex' }}
 								xs={12}
 								sm={6}
 								md={4}
-								lg={3}
-								key={item._id}>
+								lg={3}>
 								<Card card={item} />
 							</Grid>
 						</>

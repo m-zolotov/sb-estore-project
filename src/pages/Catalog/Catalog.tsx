@@ -1,31 +1,40 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import CardList from '../../components/CardList';
 import PageHeader from '../../components/PageHeader';
-import { ICard } from '../../types/ICard';
+import { ICard } from '../../types/interfaces';
 import { SearchContext } from '../../context/search-context';
-import data from '../../fixtures/data.json';
+import api from '../../utils/api';
 
 const Catalog = () => {
-	const cards = data;
 	const { search } = useContext(SearchContext);
-	const [filteredData, setFilteredData] = useState<ICard[]>(data); // filteredData
+	const [products, setProducts] = useState<ICard[]>([]);
+
 	useEffect(() => {
-		setFilteredData(
-			data.filter((card: ICard) =>
-				card.name
-					.toLowerCase()
-					.toString()
-					.includes(search.toLowerCase().toString())
-			)
+		api
+			.getProductsList()
+			.then((productsData) => {
+				setProducts(productsData.products);
+			})
+			.catch((err) => console.log(err));
+	}, []);
+
+	useEffect(() => {
+		const filteredData = products.filter((card: ICard) =>
+			card.name
+				.toLowerCase()
+				.toString()
+				.includes(search.toLowerCase().toString())
 		);
-	}, [search]);
+		setProducts(filteredData);
+	}, [search]); // TODO: Исправить баг с очищением строки поиска
+
 	return (
 		<Box>
 			<Container>
 				<PageHeader title={'Каталог'} />
-				{cards.length ? <CardList cards={filteredData} /> : ''}
+				{products ? <CardList cards={products} /> : ''}
 			</Container>
 		</Box>
 	);

@@ -1,10 +1,16 @@
-import React from 'react';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+import PageHeader from '../../components/PageHeader';
+import ButtonBack from '../../components/Button/ButtonBack';
 
 const Favorites = () => {
 	return (
-		<>
-			<p>Favorites</p>
-		</>
+		<Box>
+			<Container>
+				<ButtonBack />
+				<PageHeader title={'Избранные товары'} />
+			</Container>
+		</Box>
 	);
 };
 

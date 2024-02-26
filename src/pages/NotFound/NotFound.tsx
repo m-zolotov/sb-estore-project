@@ -3,17 +3,17 @@ import Container from '@mui/material/Container';
 import LinkBehavior from '../../components/Link/LinkBehavior';
 import PageHeader from '../../components/PageHeader';
 
-const Home = () => {
+const NotFound = () => {
 	return (
 		<>
 			<Box>
 				<Container>
-					<PageHeader title={'Главная'} />
-					<LinkBehavior text='Посмотреть каталог' to='/catalog' />
+					<PageHeader title={'Страница не найдена'} />
+					<LinkBehavior text='Перейти на главную' to='/' />
 				</Container>
 			</Box>
 		</>
 	);
 };
 
-export default Home;
+export default NotFound;
