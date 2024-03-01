@@ -19,6 +19,7 @@ import { bg } from '../../shared/colors';
 import spacing from '../../shared/spacing';
 import { ReactComponent as IconCart } from '../../assets/images/ic-cart.svg';
 import { ReactComponent as IconFavorites } from '../../assets/images/ic-favorites.svg';
+import LinkBehavior from '../../components/Link/LinkBehavior';
 
 const theme = createTheme({
 	components: {
@@ -83,8 +84,9 @@ export default function Header() {
 			}}
 			open={isMenuOpen}
 			onClose={handleMenuClose}>
-			<MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-			<MenuItem onClick={handleMenuClose}>My account</MenuItem>
+			<MenuItem onClick={handleMenuClose}>
+				<LinkBehavior text='Profile' to='/profile' />
+			</MenuItem>
 		</Menu>
 	);
 
