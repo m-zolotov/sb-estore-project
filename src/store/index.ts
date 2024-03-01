@@ -1,9 +1,12 @@
 import { combineReducers } from 'redux';
 import { configureStore } from '@reduxjs/toolkit';
-// import counterReducer from './reducers';
+
+import errorsReducer from './errors/slice';
+import productsReducer from './products/slice';
 
 const reducers = {
-	// ...errorsReducer,
+	...errorsReducer,
+	...productsReducer,
 };
 
 const store = configureStore({

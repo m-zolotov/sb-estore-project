@@ -1,34 +1,31 @@
-import { useState, useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import CardList from '../../components/CardList';
 import PageHeader from '../../components/PageHeader';
-import { ICard } from '../../types/interfaces';
-import { SearchContext } from '../../context/search-context';
-import api from '../../utils/api';
+import { useAppDispath, useAppSelector } from '../../store/hooks';
+import { getProducts } from '../../store/products/actions';
+import { selectProducts } from '../../store/products/selectors';
 
 const Catalog = () => {
-	const { search } = useContext(SearchContext);
-	const [products, setProducts] = useState<ICard[]>([]);
+	const dispatch = useAppDispath();
+	const products = useAppSelector(selectProducts);
 
 	useEffect(() => {
-		api
-			.getProductsList()
-			.then((productsData) => {
-				setProducts(productsData.products);
-			})
-			.catch((err) => console.log(err));
-	}, []);
+		dispatch(getProducts());
+	}, [dispatch]);
 
-	useEffect(() => {
-		const filteredData = products.filter((card: ICard) =>
-			card.name
-				.toLowerCase()
-				.toString()
-				.includes(search.toLowerCase().toString())
-		);
-		setProducts(filteredData);
-	}, [search]); // TODO: Исправить баг с очищением строки поиска
+	// const [products, setProducts] = useState<ICard[]>([]);
+
+	// useEffect(() => {
+	// 	const filteredData = products.filter((card: ICard) =>
+	// 		card.name
+	// 			.toLowerCase()
+	// 			.toString()
+	// 			.includes(search.toLowerCase().toString())
+	// 	);
+	// 	setProducts(filteredData);
+	// }, []); // TODO: Исправить баг с очищением строки поиска
 
 	return (
 		<Box>

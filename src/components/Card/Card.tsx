@@ -12,7 +12,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Chip from '@mui/material/Chip';
 import { ThemeProvider, createTheme, styled } from '@mui/material/styles';
-import { ICard } from '../../types/interfaces';
+import { ICard } from '../../store/models';
 import { colors, bg } from '../../shared/colors';
 import spacing from '../../shared/spacing';
 import { ReactComponent as Favorites } from '../../assets/images/ic-favorites.svg';

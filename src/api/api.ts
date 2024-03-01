@@ -1,5 +1,10 @@
 import { config } from './config';
-import { IUser, IPost, IComment } from '../types/interfaces'; // IProduct
+import { IUser, IPost, IComment } from '../store/models'; // IProduct
+
+// interface IGetProductsParams {
+// 	total: number;
+// 	products: IProduct[];
+// }
 
 type TConfigApi = {
 	baseUrl: string;
@@ -22,7 +27,7 @@ export type TUserResponseDto = ServerResponse<IUser>;
 export type TPostResponseDto = ServerResponse<IPost>;
 export type TCommentResponseDto = ServerResponse<Comment>;
 
-class Api {
+export class Api {
 	private baseUrl;
 	private headers;
 
@@ -38,6 +43,23 @@ class Api {
 	private getApiUrl(path: string) {
 		return `${this.baseUrl}${path}`;
 	}
+
+	// getProductsList<T>(): Promise<T> {
+	// 	return fetch(this.getApiUrl('/products'), {
+	// 		headers: this.headers,
+	// 	}).then((response) => {
+	// 		if (!response.ok) {
+	// 			throw response.json().then((err) => Promise.reject(err));
+	// 		}
+	// 		return response.json() as Promise<T>;
+	// 	});
+	// }
+
+	// getProductsList = (): Promise<IGetProductsParams> => {
+	// 	return fetch(this.getApiUrl('/products'), {
+	// 		headers: this.headers,
+	// 	}).then(this.onResponse);
+	// };
 
 	getProductsList() {
 		return fetch(this.getApiUrl('/products'), {
