@@ -1,31 +1,25 @@
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import CircularProgress from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
 import PageHeader from '../../components/PageHeader';
 import ButtonBack from '../../components/Button/ButtonBack';
-import { IUser } from '../../store/models';
-import api from '../../api/api';
+import { useAppDispath, useAppSelector } from '../../store/hooks';
+import { getUser } from '../../store/user/actions';
+import { selectIsLoading, selectUser } from '../../store/user/selectors';
 
 const Profile = () => {
-	const [isLoading, setIsLoading] = useState(false);
-	const [user, setUser] = useState<IUser | null>(null);
-	const dispatch = useDispatch();
+	// const [isLoading, setIsLoading] = useState(false);
+	// const [user, setUser] = useState<IUser | null>(null);
+	const dispatch = useAppDispath();
+	const user = useAppSelector(selectUser);
+	const isLoading = useAppSelector(selectIsLoading);
 
 	useEffect(() => {
-		setIsLoading(true);
-		api
-			.getUserInfo()
-			.then((response) => {
-				setUser(response);
-				setIsLoading(false);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	}, []);
+		dispatch(getUser());
+	}, [dispatch]);
 
 	return (
 		<Box>
@@ -35,13 +29,19 @@ const Profile = () => {
 				) : (
 					<>
 						<ButtonBack />
-						<PageHeader title={'Мои данные'} />
+						<PageHeader title={'Профиль'} />
 						<Typography variant='body1' gutterBottom>
 							{user?.name}
 						</Typography>
 						<Typography variant='body1' gutterBottom>
 							{user?.email}
 						</Typography>
+						<Button size='small' variant='outlined' color='primary'>
+							Изменить
+						</Button>
+						<Button size='small' variant='outlined' color='primary'>
+							Выйти
+						</Button>
 					</>
 				)}
 			</Container>
