@@ -1,17 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-
-// import * as apiProducts from 'api/products';
 import api from '../../api/api';
 import { addError } from '../errors/actions';
-// import { IProduct } from '../models';
-
-// interface IGetProductsParams {
-// 	total: number;
-// 	products: IProduct[];
-// }
+import { sliceName } from './constants';
 
 export const getProducts = createAsyncThunk(
-	'products/getProducts',
+	`${sliceName}/getProducts`,
 	async (args, { dispatch, rejectWithValue }) => {
 		try {
 			const data = await api.getProductsList();
@@ -25,7 +18,7 @@ export const getProducts = createAsyncThunk(
 );
 
 export const getProduct = createAsyncThunk(
-	'products/getProduct',
+	`${sliceName}/getProduct`,
 	async (productId: string, { dispatch, rejectWithValue }) => {
 		try {
 			const data = await api.getProductById(productId);

@@ -1,10 +1,5 @@
 import { config } from './config';
-import { IUser, IPost, IComment } from '../store/models'; // IProduct
-
-// interface IGetProductsParams {
-// 	total: number;
-// 	products: IProduct[];
-// }
+import { IUser, IPost, IComment } from '../store/models';
 
 type TConfigApi = {
 	baseUrl: string;
@@ -43,23 +38,6 @@ export class Api {
 	private getApiUrl(path: string) {
 		return `${this.baseUrl}${path}`;
 	}
-
-	// getProductsList<T>(): Promise<T> {
-	// 	return fetch(this.getApiUrl('/products'), {
-	// 		headers: this.headers,
-	// 	}).then((response) => {
-	// 		if (!response.ok) {
-	// 			throw response.json().then((err) => Promise.reject(err));
-	// 		}
-	// 		return response.json() as Promise<T>;
-	// 	});
-	// }
-
-	// getProductsList = (): Promise<IGetProductsParams> => {
-	// 	return fetch(this.getApiUrl('/products'), {
-	// 		headers: this.headers,
-	// 	}).then(this.onResponse);
-	// };
 
 	getProductsList() {
 		return fetch(this.getApiUrl('/products'), {
