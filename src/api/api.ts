@@ -51,6 +51,21 @@ export class Api {
 		}).then(this.onResponse);
 	}
 
+	deleteProductById(productsID: string) {
+		return fetch(this.getApiUrl(`/products/${productsID}`), {
+			method: 'DELETE',
+			headers: this.headers,
+		}).then(this.onResponse);
+	}
+
+	changeProductLike(productsID: string, like: boolean) {
+		console.log('--- like', like);
+		return fetch(this.getApiUrl(`/products/likes/${productsID}`), {
+			method: like ? 'PUT' : 'DELETE',
+			headers: this.headers,
+		}).then(this.onResponse);
+	}
+
 	// -------- // --------
 
 	getUserInfo() {

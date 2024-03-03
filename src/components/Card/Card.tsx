@@ -1,9 +1,10 @@
-import React from 'react';
+import { forwardRef } from 'react';
 import {
 	Link as RouterLink,
 	LinkProps as RouterLinkProps,
 } from 'react-router-dom';
 import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
 import MuiCard from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardActionArea from '@mui/material/CardActionArea';
@@ -12,10 +13,14 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Chip from '@mui/material/Chip';
 import { ThemeProvider, createTheme, styled } from '@mui/material/styles';
+import { useAppDispath, useAppSelector } from '../../store/hooks';
+import { selectIsLoading, selectUser } from '../../store/user/selectors';
+import { changeProductLike } from '../../store/products/actions';
 import { ICard } from '../../store/models';
 import { colors, bg } from '../../shared/colors';
 import spacing from '../../shared/spacing';
-import { ReactComponent as Favorites } from '../../assets/images/ic-favorites.svg';
+import { ReactComponent as LikeNoActive } from '../../assets/images/ic-favorites.svg';
+import { ReactComponent as LikeActive } from '../../assets/images/ic-favorites-fill.svg';
 
 const theme = createTheme({
 	components: {
@@ -135,7 +140,14 @@ type ICardProps = {
 };
 
 export default function Card({ card, key }: ICardProps) {
-	const LinkBehavior = React.forwardRef<any, Omit<RouterLinkProps, 'to'>>(
+	const dispatch = useAppDispath();
+	const user = useAppSelector(selectUser);
+	const isLoading = useAppSelector(selectIsLoading);
+	// const [like, setLike] = useState( || false);
+
+	// useEffect(() => {}, [dispatch]);
+
+	const LinkBehavior = forwardRef<any, Omit<RouterLinkProps, 'to'>>(
 		(props, ref) => (
 			<RouterLink ref={ref} to={`/product/${card._id}`} {...props} />
 		)
@@ -143,17 +155,35 @@ export default function Card({ card, key }: ICardProps) {
 
 	LinkBehavior.displayName = 'LinkBehavior';
 
+	const handleChangeLike = () => {
+		// setLike(!like);
+		dispatch(
+			changeProductLike({
+				productId: card._id,
+				like: !card.likes.includes(user?._id),
+			})
+		);
+	};
+
 	return (
 		<ThemeProvider theme={theme}>
 			<MuiCard elevation={0} key={key}>
-				<CardHeader
-					avatar={<Chip label={card.discount} />}
-					action={
-						<FavoritesWrapper>
-							<Favorites />
-						</FavoritesWrapper>
-					}
-				/>
+				{isLoading ? null : (
+					<CardHeader
+						avatar={<Chip label={card.discount} />}
+						action={
+							<FavoritesWrapper>
+								<IconButton aria-label='like' onClick={handleChangeLike}>
+									{card.likes.includes(user?._id) ? (
+										<LikeActive />
+									) : (
+										<LikeNoActive />
+									)}
+								</IconButton>
+							</FavoritesWrapper>
+						}
+					/>
+				)}
 				<CardMedia
 					component='img'
 					height='187'

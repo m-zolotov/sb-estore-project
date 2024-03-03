@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
@@ -10,7 +10,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import PageHeader from '../../components/PageHeader';
 import ButtonBack from '../../components/Button/ButtonBack';
 import { useAppDispath, useAppSelector } from '../../store/hooks';
-import { getUser, editUser } from '../../store/user/actions';
+import { editUser } from '../../store/user/actions';
 import { selectIsLoading, selectUser } from '../../store/user/selectors';
 
 const theme = createTheme({
@@ -42,14 +42,9 @@ const Profile = () => {
 	const [about, setAbout] = useState(user.about || '');
 	const [isEditUser, setIsEditUser] = useState(false);
 
-	useEffect(() => {
-		dispatch(getUser());
-	}, [dispatch]);
-
 	const handleEdit = () => setIsEditUser(!isEditUser);
 
 	const handleChange = () => {
-		console.log({ name: name, about: about });
 		dispatch(
 			editUser({
 				name: name,

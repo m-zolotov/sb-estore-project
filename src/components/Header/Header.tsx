@@ -1,6 +1,7 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Badge from '@mui/material/Badge';
+import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Toolbar from '@mui/material/Toolbar';
@@ -12,6 +13,9 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { useAppDispath, useAppSelector } from '../../store/hooks';
+import { getUser } from '../../store/user/actions';
+import { selectIsLoading, selectUser } from '../../store/user/selectors';
 import Brand from '../Brand';
 import Search from '../Search';
 import Logo from '../Logo';
@@ -44,9 +48,17 @@ const theme = createTheme({
 });
 
 export default function Header() {
-	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+	const dispatch = useAppDispath();
+	const user = useAppSelector(selectUser);
+	const isLoading = useAppSelector(selectIsLoading);
+
+	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
-		React.useState<null | HTMLElement>(null);
+		useState<null | HTMLElement>(null);
+
+	useEffect(() => {
+		dispatch(getUser());
+	}, [dispatch]);
 
 	const isMenuOpen = Boolean(anchorEl);
 	const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -168,16 +180,20 @@ export default function Header() {
 										<IconCart />
 									</Badge>
 								</IconButton>
-								<IconButton
-									size='large'
-									edge='end'
-									aria-label='account of current user'
-									aria-controls={menuId}
-									aria-haspopup='true'
-									onClick={handleProfileMenuOpen}
-									color='inherit'>
-									<SentimentSatisfiedAltIcon />
-								</IconButton>
+								{isLoading ? null : (
+									<Button
+										variant='text'
+										// size='large'
+										// edge='end'
+										// aria-label='account of current user'
+										aria-controls={menuId}
+										// aria-haspopup='true'
+										onClick={handleProfileMenuOpen}
+										color='inherit'
+										endIcon={<Logo />}>
+										{user.name}
+									</Button>
+								)}
 							</Box>
 							<Box sx={{ display: { xs: 'flex', md: 'none' } }}>
 								<IconButton
