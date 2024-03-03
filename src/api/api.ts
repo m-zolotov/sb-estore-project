@@ -59,7 +59,6 @@ export class Api {
 	}
 
 	changeProductLike(productsID: string, like: boolean) {
-		console.log('--- like', like);
 		return fetch(this.getApiUrl(`/products/likes/${productsID}`), {
 			method: like ? 'PUT' : 'DELETE',
 			headers: this.headers,
