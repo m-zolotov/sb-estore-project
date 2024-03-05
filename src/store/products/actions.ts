@@ -8,6 +8,11 @@ export interface IChangeProductLikeProps {
 	like: boolean;
 }
 
+export interface IDeleteProductProps {
+	productId: string;
+	text: string;
+}
+
 export const getProducts = createAsyncThunk(
 	`${sliceName}/getProducts`,
 	async (args, { dispatch, rejectWithValue }) => {
@@ -51,7 +56,7 @@ export const deleteProduct = createAsyncThunk(
 );
 
 export const changeProductLike = createAsyncThunk(
-	`${sliceName}/deleteProduct`,
+	`${sliceName}/changeProductLike`,
 	async (args: IChangeProductLikeProps, { dispatch, rejectWithValue }) => {
 		const { productId, like } = args;
 		try {
@@ -62,6 +67,22 @@ export const changeProductLike = createAsyncThunk(
 			const text = `Не удалось ${
 				like ? 'удалить' : 'добавить'
 			} лайк продукту (ID: ${productId})`;
+			dispatch(addError({ data: e, isCritical: false, text }));
+			return rejectWithValue(text);
+		}
+	}
+);
+
+export const postReview = createAsyncThunk(
+	`${sliceName}/postReview`,
+	async (args: IDeleteProductProps, { dispatch, rejectWithValue }) => {
+		const { productId, text } = args;
+		try {
+			const data = await api.postReviewById({ productId, text });
+			dispatch(getProduct(productId));
+			return data;
+		} catch (e) {
+			const text = `Не удалось добавить отзыв к продукту (ID: ${productId})`;
 			dispatch(addError({ data: e, isCritical: false, text }));
 			return rejectWithValue(text);
 		}

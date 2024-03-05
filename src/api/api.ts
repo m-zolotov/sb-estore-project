@@ -18,6 +18,11 @@ type ServerResponse<T> = {
 	__v: number;
 } & T;
 
+type ProductReviewRequest = {
+	productId: string;
+	text: string;
+};
+
 export type TUserResponseDto = ServerResponse<IUser>;
 export type TPostResponseDto = ServerResponse<IPost>;
 export type TCommentResponseDto = ServerResponse<Comment>;
@@ -62,6 +67,22 @@ export class Api {
 		return fetch(this.getApiUrl(`/products/likes/${productsID}`), {
 			method: like ? 'PUT' : 'DELETE',
 			headers: this.headers,
+		}).then(this.onResponse);
+	}
+
+	getReviewById(productsID: string) {
+		return fetch(this.getApiUrl(`/products/${productsID}`), {
+			headers: this.headers,
+		}).then(this.onResponse);
+	} // написать reviewlist с входом пропса id продукта и рендерить. при добавлении нового отзыва не сохранять его в срезе тк при заходе на страницу отзывов дергать весь продукт и отзывы обновятся
+
+	postReviewById(params: ProductReviewRequest) {
+		return fetch(this.getApiUrl(`/products/review/${params.productId}`), {
+			method: 'POST',
+			headers: this.headers,
+			body: JSON.stringify({
+				text: params.text,
+			}),
 		}).then(this.onResponse);
 	}
 

@@ -1,8 +1,8 @@
 import { ChangeEvent } from 'react';
 import Grid from '@mui/material/Grid';
 import Card from '../Card';
-import Skeleton from '../../components/Skeleton';
-import Pagination from '../../components/Pagination';
+import Skeleton from '../Skeleton';
+import Pagination from '../Pagination';
 import { ICard } from '../../store/models';
 import usePagination from '../../hooks/usePagination';
 

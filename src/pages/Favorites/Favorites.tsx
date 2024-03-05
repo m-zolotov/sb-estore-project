@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import ButtonBack from '../../components/Button/ButtonBack';
-import FavoritesCardList from '../../components/CardList/FavoritesCardList';
+import FavoritesCardList from '../../components/CardsList/FavoritesCardList';
 import PageHeader from '../../components/PageHeader';
 import { useAppSelector } from '../../store/hooks';
 import { selectProducts } from '../../store/products/selectors';
