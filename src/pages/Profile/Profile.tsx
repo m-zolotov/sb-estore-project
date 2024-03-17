@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
@@ -9,9 +10,10 @@ import Stack from '@mui/material/Stack';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import PageHeader from '../../components/PageHeader';
 import ButtonBack from '../../components/Button/ButtonBack';
-import { useAppDispath, useAppSelector } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { editUser } from '../../store/user/actions';
 import { selectIsLoading, selectUser } from '../../store/user/selectors';
+import { setUser, setToken } from '../../store/user/slice';
 
 const theme = createTheme({
 	components: {
@@ -35,7 +37,8 @@ const theme = createTheme({
 });
 
 const Profile = () => {
-	const dispatch = useAppDispath();
+	const dispatch = useAppDispatch();
+	const navigate = useNavigate();
 	const user = useAppSelector(selectUser);
 	const isLoading = useAppSelector(selectIsLoading);
 	const [name, setName] = useState(user.name || '');
@@ -52,6 +55,12 @@ const Profile = () => {
 			})
 		);
 		setIsEditUser(!isEditUser);
+	};
+
+	const handleLogOut = () => {
+		dispatch(setToken(null));
+		dispatch(setUser(null));
+		navigate('/signin');
 	};
 
 	return (
@@ -129,7 +138,11 @@ const Profile = () => {
 									onClick={() => handleEdit()}>
 									Изменить
 								</Button>
-								<Button size='small' variant='outlined' color='primary'>
+								<Button
+									size='small'
+									variant='outlined'
+									color='primary'
+									onClick={() => handleLogOut()}>
 									Выйти
 								</Button>
 							</Stack>

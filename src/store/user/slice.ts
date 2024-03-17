@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { IAsyncError } from '../models';
-import { getUser } from './actions';
+import { editUser } from './actions';
 import { sliceName } from './constants';
 import { IStore } from './types';
 
@@ -9,25 +9,35 @@ const slice = createSlice({
 	initialState: {
 		loading: false,
 		error: '',
+		token: '',
 		user: {} as IStore['user'],
 	},
-	reducers: {},
+	reducers: {
+		setUser: (state, action) => {
+			state.user = action.payload;
+			state.loading = false;
+		},
+		setToken: (state, action) => {
+			state.token = action.payload;
+			state.loading = false;
+		},
+	},
 	extraReducers: (builder) => {
 		// user
-		builder.addCase(getUser.pending, (state) => ({
+		builder.addCase(editUser.pending, (state) => ({
 			...state,
 			loading: true,
 			error: '',
 		}));
 
-		builder.addCase(getUser.fulfilled, (state, { payload }) => ({
+		builder.addCase(editUser.fulfilled, (state, { payload }) => ({
 			...state,
 			loading: false,
 			error: '',
 			user: payload,
 		}));
 
-		builder.addCase(getUser.rejected, (state, { error }) => ({
+		builder.addCase(editUser.rejected, (state, { error }) => ({
 			...state,
 			loading: false,
 			error: (error as IAsyncError).message || 'Rejected',
@@ -39,5 +49,7 @@ const slice = createSlice({
 const reducer = {
 	[sliceName]: slice.reducer,
 };
+
+export const { setUser, setToken } = slice.actions;
 
 export default reducer;

@@ -1,6 +1,8 @@
-import { IError } from '../models';
+import { AlertColor } from '@mui/material';
 
 export interface IStore {
-	critical: IError | null;
-	list: IError[];
+	type: AlertColor;
+	text: string;
+	isOpen: boolean;
+	critical?: boolean;
 }

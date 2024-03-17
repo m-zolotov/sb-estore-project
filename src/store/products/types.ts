@@ -5,6 +5,4 @@ export interface IStore {
 	error: string;
 	products: IProduct[];
 	product: IProduct;
-	// macro: IProduct[];
-	// clusterMap: Record<number, IProduct[]>;
 }

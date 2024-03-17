@@ -5,8 +5,8 @@ import Grid from '@mui/material/Grid';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Stack from '@mui/material/Stack';
-import Brand from '../Brand';
-import Logo from '../Logo';
+import Brand from '../../Brand';
+import Logo from '../../Logo';
 import s from './footer.module.css';
 
 const Footer = () => {

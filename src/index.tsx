@@ -1,9 +1,11 @@
 import { StrictMode } from 'react';
+import { Provider } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
 import { createRoot } from 'react-dom/client';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { router } from './router';
+import store from './store';
 
 const domNode = document.getElementById('root') as HTMLDivElement;
 const root = createRoot(domNode);
@@ -29,7 +31,9 @@ root.render(
 	<StrictMode>
 		<ThemeProvider theme={theme}>
 			<CssBaseline />
-			<RouterProvider router={router} />
+			<Provider store={store}>
+				<RouterProvider router={router} />
+			</Provider>
 		</ThemeProvider>
 	</StrictMode>
 );

@@ -1,7 +1,4 @@
 import { createAction } from '@reduxjs/toolkit';
-// import { AxiosError, AxiosRequestConfig } from 'axios';
-
-// import { IError } from '../models';
 
 export const addError = createAction('errors/addError', (payload) => {
 	const { data, isCritical, text } = payload;
@@ -19,7 +16,6 @@ export const addError = createAction('errors/addError', (payload) => {
 		errorCode = 'NOT_FOUND';
 	}
 
-	// В объект без методов, чтоб нормально отправить в стор и сентри
 	const raw = data || {};
 	const error = {
 		...raw,

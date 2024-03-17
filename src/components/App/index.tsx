@@ -1,23 +1,19 @@
-// import { useState, ChangeEvent } from 'react';
 import { Outlet } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import Header from '../Header';
-import Footer from '../Footer';
-import store from '../../store';
+import { withProtection } from '../../hocs/withProtection';
+import Box from '@mui/material/Box';
+import Header from './Header';
+import Alert from './Alert';
+import Footer from './Footer';
 
-const App = () => {
-	// const [search, setSearch] = useState<string>('');
-	// const handleChangeSearch = (newSearch: ChangeEvent<HTMLInputElement>) =>
-	// 	setSearch(newSearch.target.value);
-	// const searchResult = { search, handleChangeSearch };
-
+const App = withProtection(() => {
 	return (
-		<Provider store={store}>
+		<Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
 			<Header />
+			<Alert />
 			<Outlet />
 			<Footer />
-		</Provider>
+		</Box>
 	);
-};
+});
 
 export default App;

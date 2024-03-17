@@ -16,19 +16,22 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { useAppDispath, useAppSelector } from '../../store/hooks';
-import { getUser } from '../../store/user/actions';
-import { getProducts } from '../../store/products/actions';
-import { selectIsLoading, selectUser } from '../../store/user/selectors';
-import { selectProducts } from '../../store/products/selectors'; // selectIsLoading as productIsLoading для рендера количества избранных продуктов
-import Brand from '../Brand';
-import Search from '../Search';
-import Logo from '../Logo';
-import { bg } from '../../shared/colors';
-import spacing from '../../shared/spacing';
-import { ReactComponent as IconCart } from '../../assets/images/ic-cart.svg';
-import { ReactComponent as IconFavorites } from '../../assets/images/ic-favorites.svg';
-import LinkBehavior from '../../components/Link/LinkBehavior';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { getProducts } from '../../../store/products/actions';
+import {
+	selectAccessToken,
+	selectIsLoading,
+	selectUser,
+} from '../../../store/user/selectors';
+import { selectProducts } from '../../../store/products/selectors';
+import Brand from '../../Brand';
+import Search from '../../Search';
+import Logo from '../../Logo';
+import { bg } from '../../../shared/colors';
+import spacing from '../../../shared/spacing';
+import { ReactComponent as IconCart } from '../../../assets/images/ic-cart.svg';
+import { ReactComponent as IconFavorites } from '../../../assets/images/ic-favorites.svg';
+import LinkBehavior from '../../Link/LinkBehavior';
 
 const theme = createTheme({
 	components: {
@@ -53,8 +56,9 @@ const theme = createTheme({
 });
 
 export default function Header() {
-	const dispatch = useAppDispath();
+	const dispatch = useAppDispatch();
 	const user = useAppSelector(selectUser);
+	const accessToken = useAppSelector(selectAccessToken);
 	const products = useAppSelector(selectProducts);
 	const favoritesProducts = products.filter((item) =>
 		item.likes.includes(user ? user._id : '')
@@ -66,9 +70,9 @@ export default function Header() {
 		useState<null | HTMLElement>(null);
 
 	useEffect(() => {
-		dispatch(getUser());
 		dispatch(getProducts());
-	}, [dispatch]);
+		console.log('--- accessToken', accessToken);
+	}, [dispatch, accessToken]);
 
 	const LinkBehaviorFavorites = forwardRef<any, Omit<RouterLinkProps, 'to'>>(
 		(props, ref) => <RouterLink ref={ref} to={'/favorites'} {...props} />
@@ -208,7 +212,7 @@ export default function Header() {
 									<IconButton
 										size='large'
 										edge='end'
-										aria-label={user.name}
+										aria-label={user?.name}
 										aria-controls={menuId}
 										aria-haspopup='true'
 										onClick={handleProfileMenuOpen}

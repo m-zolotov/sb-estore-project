@@ -6,15 +6,12 @@ import Container from '@mui/material/Container';
 import CircularProgress from '@mui/material/CircularProgress';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
-// import List from '@mui/material/List';
-// import ListItem from '@mui/material/ListItem';
 import Typography from '@mui/material/Typography';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import PageHeader from '../../components/PageHeader';
 import ButtonBack from '../../components/Button/ButtonBack';
 import ReviewsList from '../../components/ReviewsList';
-// import Textarea from '../../components/Textarea';
-import { useAppDispath, useAppSelector } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { getProduct, postReview } from '../../store/products/actions';
 import { selectIsLoading, selectProduct } from '../../store/products/selectors';
 import { colors, bg } from '../../shared/colors';
@@ -42,7 +39,7 @@ const Product = () => {
 	const { productId } = useParams();
 	const [writeReview, setWriteReview] = useState(false);
 	const [reviewText, setReviewText] = useState('');
-	const dispatch = useAppDispath();
+	const dispatch = useAppDispatch();
 	const product = useAppSelector(selectProduct);
 	const isLoading = useAppSelector(selectIsLoading);
 
