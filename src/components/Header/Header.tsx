@@ -1,4 +1,8 @@
-import * as React from 'react';
+import React, { useState, useEffect, forwardRef } from 'react';
+import {
+	Link as RouterLink,
+	LinkProps as RouterLinkProps,
+} from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Badge from '@mui/material/Badge';
 import Box from '@mui/material/Box';
@@ -12,6 +16,11 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { useAppDispath, useAppSelector } from '../../store/hooks';
+import { getUser } from '../../store/user/actions';
+import { getProducts } from '../../store/products/actions';
+import { selectIsLoading, selectUser } from '../../store/user/selectors';
+import { selectProducts } from '../../store/products/selectors'; // selectIsLoading as productIsLoading для рендера количества избранных продуктов
 import Brand from '../Brand';
 import Search from '../Search';
 import Logo from '../Logo';
@@ -19,6 +28,7 @@ import { bg } from '../../shared/colors';
 import spacing from '../../shared/spacing';
 import { ReactComponent as IconCart } from '../../assets/images/ic-cart.svg';
 import { ReactComponent as IconFavorites } from '../../assets/images/ic-favorites.svg';
+import LinkBehavior from '../../components/Link/LinkBehavior';
 
 const theme = createTheme({
 	components: {
@@ -43,9 +53,34 @@ const theme = createTheme({
 });
 
 export default function Header() {
-	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+	const dispatch = useAppDispath();
+	const user = useAppSelector(selectUser);
+	const products = useAppSelector(selectProducts);
+	const favoritesProducts = products.filter((item) =>
+		item.likes.includes(user ? user._id : '')
+	);
+	const isLoading = useAppSelector(selectIsLoading);
+
+	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
-		React.useState<null | HTMLElement>(null);
+		useState<null | HTMLElement>(null);
+
+	useEffect(() => {
+		dispatch(getUser());
+		dispatch(getProducts());
+	}, [dispatch]);
+
+	const LinkBehaviorFavorites = forwardRef<any, Omit<RouterLinkProps, 'to'>>(
+		(props, ref) => <RouterLink ref={ref} to={'/favorites'} {...props} />
+	);
+
+	LinkBehaviorFavorites.displayName = 'LinkBehaviorFavorites';
+
+	const LinkBehaviorCart = forwardRef<any, Omit<RouterLinkProps, 'to'>>(
+		(props, ref) => <RouterLink ref={ref} to={'/cart'} {...props} />
+	);
+
+	LinkBehaviorCart.displayName = 'LinkBehaviorCart';
 
 	const isMenuOpen = Boolean(anchorEl);
 	const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -83,8 +118,9 @@ export default function Header() {
 			}}
 			open={isMenuOpen}
 			onClose={handleMenuClose}>
-			<MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-			<MenuItem onClick={handleMenuClose}>My account</MenuItem>
+			<MenuItem onClick={handleMenuClose}>
+				<LinkBehavior text='Profile' to='/profile' />
+			</MenuItem>
 		</Menu>
 	);
 
@@ -106,7 +142,7 @@ export default function Header() {
 			onClose={handleMobileMenuClose}>
 			<MenuItem>
 				<IconButton size='large' aria-label='show 4 new mails' color='inherit'>
-					<Badge badgeContent={4} color='error'>
+					<Badge badgeContent={favoritesProducts.length} color='error'>
 						<IconFavorites />
 					</Badge>
 				</IconButton>
@@ -151,14 +187,16 @@ export default function Header() {
 							<Box sx={{ flexGrow: 1 }} />
 							<Box sx={{ display: { xs: 'none', md: 'flex' } }}>
 								<IconButton
+									component={LinkBehaviorFavorites}
 									size='large'
 									aria-label='show 4 new mails'
 									color='inherit'>
-									<Badge badgeContent={4} color='error'>
+									<Badge badgeContent={favoritesProducts.length} color='error'>
 										<IconFavorites />
 									</Badge>
 								</IconButton>
 								<IconButton
+									component={LinkBehaviorCart}
 									size='large'
 									aria-label='show 17 new notifications'
 									color='inherit'>
@@ -166,16 +204,18 @@ export default function Header() {
 										<IconCart />
 									</Badge>
 								</IconButton>
-								<IconButton
-									size='large'
-									edge='end'
-									aria-label='account of current user'
-									aria-controls={menuId}
-									aria-haspopup='true'
-									onClick={handleProfileMenuOpen}
-									color='inherit'>
-									<SentimentSatisfiedAltIcon />
-								</IconButton>
+								{isLoading ? null : (
+									<IconButton
+										size='large'
+										edge='end'
+										aria-label={user.name}
+										aria-controls={menuId}
+										aria-haspopup='true'
+										onClick={handleProfileMenuOpen}
+										color='inherit'>
+										<Logo />
+									</IconButton>
+								)}
 							</Box>
 							<Box sx={{ display: { xs: 'flex', md: 'none' } }}>
 								<IconButton

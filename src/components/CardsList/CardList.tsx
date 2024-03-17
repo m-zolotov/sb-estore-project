@@ -1,9 +1,9 @@
 import { ChangeEvent } from 'react';
 import Grid from '@mui/material/Grid';
 import Card from '../Card';
-import Skeleton from '../../components/Skeleton';
-import Pagination from '../../components/Pagination';
-import { ICard } from '../../types/interfaces';
+import Skeleton from '../Skeleton';
+import Pagination from '../Pagination';
+import { ICard } from '../../store/models';
 import usePagination from '../../hooks/usePagination';
 
 type ICardListProps = {
@@ -22,18 +22,16 @@ const CardList = ({ cards }: ICardListProps) => {
 			<Grid container spacing={2}>
 				{cards.length ? (
 					getCurrentData().map((item: ICard) => (
-						<>
-							<Grid
-								item
-								key={item._id}
-								sx={{ display: 'flex' }}
-								xs={12}
-								sm={6}
-								md={4}
-								lg={3}>
-								<Card card={item} />
-							</Grid>
-						</>
+						<Grid
+							item
+							key={item._id}
+							sx={{ display: 'flex' }}
+							xs={12}
+							sm={6}
+							md={4}
+							lg={3}>
+							<Card card={item} />
+						</Grid>
 					))
 				) : (
 					<Grid container spacing={2}>

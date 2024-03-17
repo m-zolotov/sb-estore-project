@@ -14,13 +14,12 @@ import CardMedia from '@mui/material/CardMedia';
 import Chip from '@mui/material/Chip';
 import { ThemeProvider, createTheme, styled } from '@mui/material/styles';
 import { useAppDispath, useAppSelector } from '../../store/hooks';
-import { selectIsLoading, selectUser } from '../../store/user/selectors';
+import { selectUser } from '../../store/user/selectors';
 import { changeProductLike } from '../../store/products/actions';
 import { ICard } from '../../store/models';
 import { colors, bg } from '../../shared/colors';
 import spacing from '../../shared/spacing';
-import { ReactComponent as LikeNoActive } from '../../assets/images/ic-favorites.svg';
-import { ReactComponent as LikeActive } from '../../assets/images/ic-favorites-fill.svg';
+import { ReactComponent as IconTrash } from '../../assets/images/ic-trash.svg';
 
 const theme = createTheme({
 	components: {
@@ -134,15 +133,14 @@ const FavoritesWrapper = styled('div')(() => ({
 	marginRight: spacing(2),
 }));
 
-type ICardProps = {
+type IFavoritesCardProps = {
 	card: ICard;
 	key?: string;
 };
 
-export default function Card({ card, key }: ICardProps) {
+export default function FavoritesCard({ card, key }: IFavoritesCardProps) {
 	const dispatch = useAppDispath();
 	const user = useAppSelector(selectUser);
-	const isLoading = useAppSelector(selectIsLoading);
 
 	const LinkBehavior = forwardRef<any, Omit<RouterLinkProps, 'to'>>(
 		(props, ref) => (
@@ -152,7 +150,7 @@ export default function Card({ card, key }: ICardProps) {
 
 	LinkBehavior.displayName = 'LinkBehavior';
 
-	const handleChangeLike = () => {
+	const handleDelete = () => {
 		dispatch(
 			changeProductLike({
 				productId: card._id,
@@ -164,22 +162,16 @@ export default function Card({ card, key }: ICardProps) {
 	return (
 		<ThemeProvider theme={theme}>
 			<MuiCard elevation={0} key={key}>
-				{isLoading ? null : (
-					<CardHeader
-						avatar={<Chip label={card.discount} />}
-						action={
-							<FavoritesWrapper>
-								<IconButton aria-label='like' onClick={handleChangeLike}>
-									{card.likes.includes(user?._id) ? (
-										<LikeActive />
-									) : (
-										<LikeNoActive />
-									)}
-								</IconButton>
-							</FavoritesWrapper>
-						}
-					/>
-				)}
+				<CardHeader
+					avatar={<Chip label={card.discount} />}
+					action={
+						<FavoritesWrapper>
+							<IconButton aria-label='delete' onClick={handleDelete}>
+								<IconTrash />
+							</IconButton>
+						</FavoritesWrapper>
+					}
+				/>
 				<CardMedia
 					component='img'
 					height='187'
