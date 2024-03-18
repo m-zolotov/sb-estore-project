@@ -59,7 +59,6 @@ export const SignInForm: FC = () => {
 		dispatch(setText('Вы успешно аутентифицированы в системе'));
 		dispatch(setIsOpen(true));
 		setTimeout(() => dispatch(setIsOpen(false)), 5000);
-		console.log('location.state', location.state);
 		navigate(location.state);
 	}
 

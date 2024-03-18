@@ -6,6 +6,7 @@ import {
 import AppBar from '@mui/material/AppBar';
 import Badge from '@mui/material/Badge';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
@@ -66,12 +67,12 @@ export default function Header() {
 	const isLoading = useAppSelector(selectIsLoading);
 
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
 	const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
 		useState<null | HTMLElement>(null);
 
 	useEffect(() => {
 		dispatch(getProducts());
-		console.log('--- accessToken', accessToken);
 	}, [dispatch, accessToken]);
 
 	const LinkBehaviorFavorites = forwardRef<any, Omit<RouterLinkProps, 'to'>>(
@@ -85,6 +86,12 @@ export default function Header() {
 	);
 
 	LinkBehaviorCart.displayName = 'LinkBehaviorCart';
+
+	const LinkBehaviorCatalog = forwardRef<any, Omit<RouterLinkProps, 'to'>>(
+		(props, ref) => <RouterLink ref={ref} to={'/catalog'} {...props} />
+	);
+
+	LinkBehaviorCatalog.displayName = 'LinkBehaviorCatalog';
 
 	const isMenuOpen = Boolean(anchorEl);
 	const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -188,7 +195,20 @@ export default function Header() {
 								<Brand />
 							</Stack>
 							<Search />
-							<Box sx={{ flexGrow: 1 }} />
+							<Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+								<Button
+									key='catalog'
+									component={LinkBehaviorCatalog}
+									sx={{ my: 2, color: 'black', display: 'block' }}>
+									Каталог
+								</Button>
+								<Button
+									key='favorites'
+									component={LinkBehaviorFavorites}
+									sx={{ my: 2, color: 'black', display: 'block' }}>
+									Избранные
+								</Button>
+							</Box>
 							<Box sx={{ display: { xs: 'none', md: 'flex' } }}>
 								<IconButton
 									component={LinkBehaviorFavorites}
