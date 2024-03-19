@@ -15,7 +15,11 @@ const Favorites = () => {
 	);
 
 	return (
-		<Box>
+		<Box
+			sx={{
+				display: 'flex',
+				minHeight: 'calc(100vh - 288px)',
+			}}>
 			<Container>
 				<ButtonBack />
 				<PageHeader title={'Избранные товары'} />

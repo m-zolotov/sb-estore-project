@@ -33,6 +33,7 @@ import spacing from '../../../shared/spacing';
 import { ReactComponent as IconCart } from '../../../assets/images/ic-cart.svg';
 import { ReactComponent as IconFavorites } from '../../../assets/images/ic-favorites.svg';
 import LinkBehavior from '../../Link/LinkBehavior';
+import { selectCartItems } from '../../../store/cart/selectors';
 
 const theme = createTheme({
 	components: {
@@ -41,6 +42,7 @@ const theme = createTheme({
 				root: {
 					backgroundColor: bg.main,
 					marginBottom: spacing(2),
+					maxHeight: '80px',
 				},
 			},
 		},
@@ -61,6 +63,7 @@ export default function Header() {
 	const user = useAppSelector(selectUser);
 	const accessToken = useAppSelector(selectAccessToken);
 	const products = useAppSelector(selectProducts);
+	const cartItems = useAppSelector(selectCartItems);
 	const favoritesProducts = products.filter((item) =>
 		item.likes.includes(user ? user._id : '')
 	);
@@ -153,9 +156,11 @@ export default function Header() {
 			onClose={handleMobileMenuClose}>
 			<MenuItem>
 				<IconButton size='large' aria-label='show 4 new mails' color='inherit'>
-					<Badge badgeContent={favoritesProducts.length} color='error'>
-						<IconFavorites />
-					</Badge>
+					{favoritesProducts.length ? (
+						<Badge badgeContent={favoritesProducts.length} color='error'>
+							<IconFavorites />
+						</Badge>
+					) : null}
 				</IconButton>
 				<p>Messages</p>
 			</MenuItem>
@@ -164,9 +169,11 @@ export default function Header() {
 					size='large'
 					aria-label='show 17 new notifications'
 					color='inherit'>
-					<Badge badgeContent={17} color='error'>
-						<IconCart />
-					</Badge>
+					{cartItems?.length ? (
+						<Badge badgeContent={cartItems?.length} color='error'>
+							<IconCart />
+						</Badge>
+					) : null}
 				</IconButton>
 				<p>Notifications</p>
 			</MenuItem>
@@ -186,7 +193,7 @@ export default function Header() {
 
 	return (
 		<ThemeProvider theme={theme}>
-			<Box sx={{ flexGrow: 1 }}>
+			<Box sx={{ flexGrow: 1, maxHeight: '80px' }}>
 				<AppBar position='static' color='transparent' elevation={0}>
 					<Container>
 						<Toolbar disableGutters>
@@ -215,18 +222,24 @@ export default function Header() {
 									size='large'
 									aria-label='show 4 new mails'
 									color='inherit'>
-									<Badge badgeContent={favoritesProducts.length} color='error'>
-										<IconFavorites />
-									</Badge>
+									{favoritesProducts.length ? (
+										<Badge
+											badgeContent={favoritesProducts.length}
+											color='error'>
+											<IconFavorites />
+										</Badge>
+									) : null}
 								</IconButton>
 								<IconButton
 									component={LinkBehaviorCart}
 									size='large'
 									aria-label='show 17 new notifications'
 									color='inherit'>
-									<Badge badgeContent={17} color='error'>
-										<IconCart />
-									</Badge>
+									{cartItems?.length ? (
+										<Badge badgeContent={cartItems?.length} color='error'>
+											<IconCart />
+										</Badge>
+									) : null}
 								</IconButton>
 								{isLoading ? null : (
 									<IconButton

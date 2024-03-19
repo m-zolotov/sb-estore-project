@@ -37,6 +37,26 @@ export interface IProduct {
 	__v?: number;
 }
 
+export interface ICartItems {
+	discount: number;
+	stock: number;
+	available?: boolean;
+	pictures: string;
+	likes: string[];
+	reviews: IReview[];
+	tags: string[];
+	isPublished: boolean;
+	_id: string;
+	name: string;
+	author: IUser;
+	price: number;
+	wight?: string;
+	description: string;
+	created_at: string;
+	updated_at?: string;
+	__v?: number;
+}
+
 export interface IComment {
 	text: string;
 	author: IUser;

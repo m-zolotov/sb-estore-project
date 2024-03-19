@@ -7,7 +7,13 @@ import Footer from './Footer';
 
 const App = withProtection(() => {
 	return (
-		<Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+		<Box
+			sx={{
+				display: 'flex',
+				flexDirection: 'column',
+				minHeight: '100vh',
+				justifyContent: 'start',
+			}}>
 			<Header />
 			<Alert />
 			<Outlet />

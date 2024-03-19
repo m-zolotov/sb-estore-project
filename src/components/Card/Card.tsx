@@ -15,12 +15,16 @@ import Chip from '@mui/material/Chip';
 import { ThemeProvider, createTheme, styled } from '@mui/material/styles';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { selectIsLoading, selectUser } from '../../store/user/selectors';
+import { selectCartItems } from '../../store/cart/selectors';
 import { changeProductLike } from '../../store/products/actions';
+import { addItem, deleteItem } from '../../store/cart/slice';
 import { ICard } from '../../store/models';
 import { colors, bg } from '../../shared/colors';
 import spacing from '../../shared/spacing';
 import { ReactComponent as LikeNoActive } from '../../assets/images/ic-favorites.svg';
 import { ReactComponent as LikeActive } from '../../assets/images/ic-favorites-fill.svg';
+import CountField from '../CountField';
+import { ReactComponent as IconTrash } from '../../assets/images/ic-trash.svg';
 
 const theme = createTheme({
 	components: {
@@ -120,7 +124,6 @@ const HeadingWrapper = styled('p')(() => ({
 }));
 
 const FavoritesWrapper = styled('div')(() => ({
-	marginTop: '5px',
 	marginRight: spacing(2),
 }));
 
@@ -132,7 +135,10 @@ type ICardProps = {
 export default function Card({ card, key }: ICardProps) {
 	const dispatch = useAppDispatch();
 	const user = useAppSelector(selectUser);
+	const cartItems = useAppSelector(selectCartItems);
 	const isLoading = useAppSelector(selectIsLoading);
+	const isStock = card.stock;
+	const isAddedToCart = cartItems?.find((item) => item._id === card._id);
 
 	const LinkBehavior = forwardRef<any, Omit<RouterLinkProps, 'to'>>(
 		(props, ref) => (
@@ -151,12 +157,24 @@ export default function Card({ card, key }: ICardProps) {
 		);
 	};
 
+	const handleDeleteItem = ({ _id }: Pick<ICard, '_id'>) => {
+		dispatch(deleteItem({ _id }));
+	};
+
+	const handleAddItem = (card: ICard) => {
+		dispatch(addItem({ ...card, totalAmount: 1 }));
+	};
+
 	return (
 		<ThemeProvider theme={theme}>
 			<MuiCard elevation={0} key={key}>
 				{isLoading ? null : (
 					<CardHeader
-						avatar={<Chip label={card.discount} />}
+						avatar={
+							card.discount ? (
+								<Chip label={`-${card.discount}`} color='error' />
+							) : null
+						}
 						action={
 							<FavoritesWrapper>
 								<IconButton aria-label='like' onClick={handleChangeLike}>
@@ -178,16 +196,29 @@ export default function Card({ card, key }: ICardProps) {
 				/>
 				<CardActionArea component={LinkBehavior}>
 					<CardContent>
-						{/* <OldPriceWrapper>{card.old_price}</OldPriceWrapper> */}
 						<CurrentPriceWrapper>{`${card.price} ₽`}</CurrentPriceWrapper>
 						<WeightWrapper>{card.wight}</WeightWrapper>
 						<HeadingWrapper>{card.name}</HeadingWrapper>
 					</CardContent>
 				</CardActionArea>
 				<CardActions>
-					<Button size='small' color='primary'>
-						В корзину
-					</Button>
+					{isAddedToCart ? (
+						<>
+							<CountField _id={card._id} />
+							<IconButton
+								aria-label='delete'
+								onClick={() => handleDeleteItem({ _id: card._id })}>
+								<IconTrash />
+							</IconButton>
+						</>
+					) : (
+						<Button
+							size='small'
+							color={isStock ? 'primary' : 'secondary'}
+							onClick={() => handleAddItem(card)}>
+							{isStock ? 'В корзину' : 'Нет в продаже'}
+						</Button>
+					)}
 				</CardActions>
 			</MuiCard>
 		</ThemeProvider>
