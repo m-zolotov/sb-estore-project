@@ -1,4 +1,3 @@
-import { TCartItem } from '../../store/cart/types';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
@@ -7,6 +6,7 @@ import { ReactComponent as IconTrash } from '../../assets/images/ic-trash.svg';
 import { useAppDispatch } from '../../store/hooks';
 import { deleteItem } from '../../store/cart/slice';
 import { ICard } from '../../store/models';
+import { TCartItem } from '../../store/cart/types';
 
 const CartItem = ({
 	_id,

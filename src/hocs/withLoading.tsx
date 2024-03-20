@@ -1,7 +1,8 @@
 import { ComponentType, FC } from 'react';
+import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
 import { useAppSelector } from '../store/hooks';
 import { selectIsLoading } from '../store/products/selectors';
-import { Box, CircularProgress } from '@mui/material';
 
 export const withLoading = <P extends object>(
 	WrappedComponent: ComponentType<P>

@@ -17,14 +17,6 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import { getProducts } from '../../../store/products/actions';
-import {
-	selectAccessToken,
-	selectIsLoading,
-	selectUser,
-} from '../../../store/user/selectors';
-import { selectProducts } from '../../../store/products/selectors';
 import Brand from '../../Brand';
 import Search from '../../Search';
 import Logo from '../../Logo';
@@ -33,7 +25,15 @@ import spacing from '../../../shared/spacing';
 import { ReactComponent as IconCart } from '../../../assets/images/ic-cart.svg';
 import { ReactComponent as IconFavorites } from '../../../assets/images/ic-favorites.svg';
 import LinkBehavior from '../../Link/LinkBehavior';
+import { getProducts } from '../../../store/products/actions';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { selectCartItems } from '../../../store/cart/selectors';
+import { selectProducts } from '../../../store/products/selectors';
+import {
+	selectAccessToken,
+	selectIsLoading,
+	selectUser,
+} from '../../../store/user/selectors';
 
 const theme = createTheme({
 	components: {

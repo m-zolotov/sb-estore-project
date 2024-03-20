@@ -1,5 +1,6 @@
 import { FC } from 'react';
-import { Alert as AlertLib, Snackbar } from '@mui/material';
+import { Alert as AlertLib } from '@mui/material';
+import Snackbar from '@mui/material/Snackbar';
 import { useAppSelector } from '../../../store/hooks';
 import {
 	selectAlertType,

@@ -1,5 +1,8 @@
-import { Button, Divider, Stack, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 import { useAppSelector } from '../../store/hooks';
 import { selectCartItems } from '../../store/cart/selectors';
 
@@ -51,7 +54,12 @@ const CartDetails = () => {
 							{`${price - discount} ₽`}
 						</Typography>
 					</Stack>
-					<Button variant='contained' fullWidth color='error' size='large'>
+					<Button
+						variant='contained'
+						fullWidth
+						color='error'
+						size='large'
+						style={{ boxShadow: 'none' }}>
 						Оформить заказ
 					</Button>
 				</Box>

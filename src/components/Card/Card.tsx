@@ -28,26 +28,6 @@ import { ReactComponent as IconTrash } from '../../assets/images/ic-trash.svg';
 
 const theme = createTheme({
 	components: {
-		MuiCard: {
-			styleOverrides: {
-				root: {},
-			},
-		},
-		MuiCardActionArea: {
-			styleOverrides: {
-				root: {},
-			},
-		},
-		MuiCardActions: {
-			styleOverrides: {
-				root: {},
-			},
-		},
-		MuiCardContent: {
-			styleOverrides: {
-				root: {},
-			},
-		},
 		MuiCardHeader: {
 			styleOverrides: {
 				root: {
@@ -57,16 +37,6 @@ const theme = createTheme({
 				action: {
 					margin: 0,
 				},
-			},
-		},
-		MuiCardMedia: {
-			styleOverrides: {
-				root: {},
-			},
-		},
-		MuiBadge: {
-			styleOverrides: {
-				root: {},
 			},
 		},
 		MuiChip: {

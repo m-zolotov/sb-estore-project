@@ -1,8 +1,10 @@
-import { IconButton, Typography, styled } from '@mui/material';
-import { minusTotalAmount, plusTotalAmount } from '../../store/cart/slice';
-import { TCartItem } from '../../store/cart/types';
+import { styled } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
+import { minusTotalAmount, plusTotalAmount } from '../../store/cart/slice';
+import { TCartItem } from '../../store/cart/types';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { selectCartItems } from '../../store/cart/selectors';
 
