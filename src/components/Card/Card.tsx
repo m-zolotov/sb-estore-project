@@ -12,6 +12,7 @@ import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Chip from '@mui/material/Chip';
+import CountField from '../CountField';
 import { ThemeProvider, createTheme, styled } from '@mui/material/styles';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { selectIsLoading, selectUser } from '../../store/user/selectors';
@@ -23,7 +24,6 @@ import { colors, bg } from '../../shared/colors';
 import spacing from '../../shared/spacing';
 import { ReactComponent as LikeNoActive } from '../../assets/images/ic-favorites.svg';
 import { ReactComponent as LikeActive } from '../../assets/images/ic-favorites-fill.svg';
-import CountField from '../CountField';
 import { ReactComponent as IconTrash } from '../../assets/images/ic-trash.svg';
 
 const theme = createTheme({
@@ -184,8 +184,9 @@ export default function Card({ card, key }: ICardProps) {
 					) : (
 						<Button
 							size='small'
-							color={isStock ? 'primary' : 'secondary'}
-							onClick={() => handleAddItem(card)}>
+							color={isStock ? 'error' : 'primary'}
+							onClick={() => handleAddItem(card)}
+							style={{ boxShadow: 'none' }}>
 							{isStock ? 'В корзину' : 'Нет в продаже'}
 						</Button>
 					)}
