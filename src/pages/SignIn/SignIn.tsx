@@ -7,7 +7,13 @@ import PageHeader from '../../components/PageHeader';
 const SignIn: FC = () => {
 	return (
 		<>
-			<Box>
+			<Box
+				sx={{
+					display: 'flex',
+					flexDirection: 'column',
+					minHeight: 'calc(100vh - 288px)',
+					justifyContent: 'start',
+				}}>
 				<Container>
 					<PageHeader title={'Войти'} />
 					<SignInForm />

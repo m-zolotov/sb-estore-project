@@ -78,6 +78,12 @@ export default function Header() {
 		dispatch(getProducts());
 	}, [dispatch, accessToken]);
 
+	const LinkBehaviorHome = forwardRef<any, Omit<RouterLinkProps, 'to'>>(
+		(props, ref) => <RouterLink ref={ref} to={'/'} {...props} />
+	);
+
+	LinkBehaviorHome.displayName = 'LinkBehaviorHome';
+
 	const LinkBehaviorFavorites = forwardRef<any, Omit<RouterLinkProps, 'to'>>(
 		(props, ref) => <RouterLink ref={ref} to={'/favorites'} {...props} />
 	);
@@ -203,6 +209,12 @@ export default function Header() {
 							</Stack>
 							<Search />
 							<Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+								<Button
+									key='home'
+									component={LinkBehaviorHome}
+									sx={{ my: 2, color: 'black', display: 'block' }}>
+									Главная
+								</Button>
 								<Button
 									key='catalog'
 									component={LinkBehaviorCatalog}

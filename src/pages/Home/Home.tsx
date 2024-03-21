@@ -1,15 +1,25 @@
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import LinkBehavior from '../../components/Link/LinkBehavior';
+import CardList from '../../components/CardsList';
 import PageHeader from '../../components/PageHeader';
+import { useAppSelector } from '../../store/hooks';
+import { selectProducts } from '../../store/products/selectors';
 
 const Home = () => {
+	const products = useAppSelector(selectProducts);
+
 	return (
 		<>
-			<Box>
+			<Box
+				sx={{
+					display: 'flex',
+					flexDirection: 'column',
+					minHeight: 'calc(100vh - 288px)',
+					justifyContent: 'start',
+				}}>
 				<Container>
 					<PageHeader title={'Главная'} />
-					<LinkBehavior text='Посмотреть каталог' to='/catalog' />
+					{products ? <CardList cards={products} /> : ''}
 				</Container>
 			</Box>
 		</>
