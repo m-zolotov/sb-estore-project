@@ -21,7 +21,7 @@ const theme = createTheme({
 	},
 });
 
-const Skeleton = () => {
+const SkeletonCard = () => {
 	return (
 		<ThemeProvider theme={theme}>
 			<Stack spacing={2}>
@@ -37,4 +37,4 @@ const Skeleton = () => {
 	);
 };
 
-export default Skeleton;
+export default SkeletonCard;

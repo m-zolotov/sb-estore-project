@@ -17,14 +17,6 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import { getProducts } from '../../../store/products/actions';
-import {
-	selectAccessToken,
-	selectIsLoading,
-	selectUser,
-} from '../../../store/user/selectors';
-import { selectProducts } from '../../../store/products/selectors';
 import Brand from '../../Brand';
 import Search from '../../Search';
 import Logo from '../../Logo';
@@ -33,6 +25,15 @@ import spacing from '../../../shared/spacing';
 import { ReactComponent as IconCart } from '../../../assets/images/ic-cart.svg';
 import { ReactComponent as IconFavorites } from '../../../assets/images/ic-favorites.svg';
 import LinkBehavior from '../../Link/LinkBehavior';
+import { getProducts } from '../../../store/products/actions';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { selectCartItems } from '../../../store/cart/selectors';
+import { selectProducts } from '../../../store/products/selectors';
+import {
+	selectAccessToken,
+	selectIsLoading,
+	selectUser,
+} from '../../../store/user/selectors';
 
 const theme = createTheme({
 	components: {
@@ -41,6 +42,7 @@ const theme = createTheme({
 				root: {
 					backgroundColor: bg.main,
 					marginBottom: spacing(2),
+					maxHeight: '80px',
 				},
 			},
 		},
@@ -61,6 +63,7 @@ export default function Header() {
 	const user = useAppSelector(selectUser);
 	const accessToken = useAppSelector(selectAccessToken);
 	const products = useAppSelector(selectProducts);
+	const cartItems = useAppSelector(selectCartItems);
 	const favoritesProducts = products.filter((item) =>
 		item.likes.includes(user ? user._id : '')
 	);
@@ -74,6 +77,12 @@ export default function Header() {
 	useEffect(() => {
 		dispatch(getProducts());
 	}, [dispatch, accessToken]);
+
+	const LinkBehaviorHome = forwardRef<any, Omit<RouterLinkProps, 'to'>>(
+		(props, ref) => <RouterLink ref={ref} to={'/'} {...props} />
+	);
+
+	LinkBehaviorHome.displayName = 'LinkBehaviorHome';
 
 	const LinkBehaviorFavorites = forwardRef<any, Omit<RouterLinkProps, 'to'>>(
 		(props, ref) => <RouterLink ref={ref} to={'/favorites'} {...props} />
@@ -153,9 +162,11 @@ export default function Header() {
 			onClose={handleMobileMenuClose}>
 			<MenuItem>
 				<IconButton size='large' aria-label='show 4 new mails' color='inherit'>
-					<Badge badgeContent={favoritesProducts.length} color='error'>
-						<IconFavorites />
-					</Badge>
+					{favoritesProducts.length ? (
+						<Badge badgeContent={favoritesProducts.length} color='error'>
+							<IconFavorites />
+						</Badge>
+					) : null}
 				</IconButton>
 				<p>Messages</p>
 			</MenuItem>
@@ -164,9 +175,11 @@ export default function Header() {
 					size='large'
 					aria-label='show 17 new notifications'
 					color='inherit'>
-					<Badge badgeContent={17} color='error'>
-						<IconCart />
-					</Badge>
+					{cartItems?.length ? (
+						<Badge badgeContent={cartItems?.length} color='error'>
+							<IconCart />
+						</Badge>
+					) : null}
 				</IconButton>
 				<p>Notifications</p>
 			</MenuItem>
@@ -186,7 +199,7 @@ export default function Header() {
 
 	return (
 		<ThemeProvider theme={theme}>
-			<Box sx={{ flexGrow: 1 }}>
+			<Box sx={{ flexGrow: 1, maxHeight: '80px' }}>
 				<AppBar position='static' color='transparent' elevation={0}>
 					<Container>
 						<Toolbar disableGutters>
@@ -196,6 +209,12 @@ export default function Header() {
 							</Stack>
 							<Search />
 							<Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+								<Button
+									key='home'
+									component={LinkBehaviorHome}
+									sx={{ my: 2, color: 'black', display: 'block' }}>
+									Главная
+								</Button>
 								<Button
 									key='catalog'
 									component={LinkBehaviorCatalog}
@@ -215,18 +234,24 @@ export default function Header() {
 									size='large'
 									aria-label='show 4 new mails'
 									color='inherit'>
-									<Badge badgeContent={favoritesProducts.length} color='error'>
-										<IconFavorites />
-									</Badge>
+									{favoritesProducts.length ? (
+										<Badge
+											badgeContent={favoritesProducts.length}
+											color='error'>
+											<IconFavorites />
+										</Badge>
+									) : null}
 								</IconButton>
 								<IconButton
 									component={LinkBehaviorCart}
 									size='large'
 									aria-label='show 17 new notifications'
 									color='inherit'>
-									<Badge badgeContent={17} color='error'>
-										<IconCart />
-									</Badge>
+									{cartItems?.length ? (
+										<Badge badgeContent={cartItems?.length} color='error'>
+											<IconCart />
+										</Badge>
+									) : null}
 								</IconButton>
 								{isLoading ? null : (
 									<IconButton

@@ -1,3 +1,3 @@
-import Skilleton from './Skeleton';
+import SkeletonCard from './SkeletonCard';
 
-export default Skilleton;
+export default SkeletonCard;

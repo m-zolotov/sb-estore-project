@@ -1,4 +1,3 @@
-import React from 'react';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
@@ -15,7 +14,7 @@ const Footer = () => {
 			<Container>
 				<Grid container spacing={2}>
 					<Grid item xs={3}>
-						<Stack direction='row' spacing={2}>
+						<Stack direction='row' spacing={2} style={{ marginTop: '56px' }}>
 							<Logo />
 							<Brand />
 						</Stack>

@@ -5,12 +5,14 @@ import apiReducer, { slice } from './api/slice';
 import errorsReducer from './errors/slice';
 import productsReducer from './products/slice';
 import userReducer from './user/slice';
+import cartReducer from './cart/slice';
 
 const reducers = {
 	...apiReducer,
 	...errorsReducer,
 	...productsReducer,
 	...userReducer,
+	...cartReducer,
 };
 
 const store = configureStore({
