@@ -1,34 +1,37 @@
 import { createSlice } from '@reduxjs/toolkit';
-
-import { addError } from './actions';
+import { AlertColor } from '@mui/material';
 import { sliceName } from './constants';
-import { IStore } from './types';
+
+type TAlertState = {
+	type: AlertColor;
+	text: string;
+	isOpen: boolean;
+	critical: boolean;
+};
+
+const initialState: TAlertState = {
+	type: 'success',
+	text: '',
+	isOpen: false,
+	critical: false,
+};
 
 const slice = createSlice({
 	name: sliceName,
-	initialState: {
-		critical: null as IStore['critical'],
-		list: [] as IStore['list'],
-	},
+	initialState: initialState,
 	reducers: {
-		shiftError(state: IStore) {
-			state.list.shift();
+		setType: (state, action) => {
+			state.type = action.payload;
 		},
-		clear(state: IStore) {
-			state.critical = null;
-			state.list = [];
+		setText: (state, action) => {
+			state.text = action.payload;
 		},
-	},
-	extraReducers: (builder) => {
-		builder.addCase(addError, (state: IStore, { payload }) => {
-			const { isCritical } = payload;
-
-			if (isCritical) {
-				state.critical = state.critical || payload;
-			} else {
-				state.list.push(payload);
-			}
-		});
+		setIsOpen: (state, action) => {
+			state.isOpen = action.payload;
+		},
+		setIsCritical: (state, action) => {
+			state.critical = action.payload;
+		},
 	},
 });
 
@@ -36,6 +39,6 @@ const reducer = {
 	[sliceName]: slice.reducer,
 };
 
-export const { shiftError, clear } = slice.actions;
+export const { setType, setText, setIsOpen, setIsCritical } = slice.actions;
 
 export default reducer;

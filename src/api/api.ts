@@ -3,7 +3,7 @@ import { IUser, IPost, IComment } from '../store/models';
 
 type TConfigApi = {
 	baseUrl: string;
-	headers: HeadersInit;
+	token: string;
 };
 
 export type UserBodyDto = {
@@ -29,11 +29,14 @@ export type TCommentResponseDto = ServerResponse<Comment>;
 
 export class Api {
 	private baseUrl;
-	private headers;
+	private headers: HeadersInit;
 
-	constructor({ baseUrl, headers }: TConfigApi) {
+	constructor({ baseUrl, token }: TConfigApi) {
 		this.baseUrl = baseUrl;
-		this.headers = headers;
+		this.headers = {
+			'content-type': 'application/json',
+			authorization: `Bearer ${token}`,
+		};
 	}
 
 	private onResponse(res: Response) {
@@ -74,7 +77,7 @@ export class Api {
 		return fetch(this.getApiUrl(`/products/${productsID}`), {
 			headers: this.headers,
 		}).then(this.onResponse);
-	} // написать reviewlist с входом пропса id продукта и рендерить. при добавлении нового отзыва не сохранять его в срезе тк при заходе на страницу отзывов дергать весь продукт и отзывы обновятся
+	}
 
 	postReviewById(params: ProductReviewRequest) {
 		return fetch(this.getApiUrl(`/products/review/${params.productId}`), {
@@ -83,14 +86,6 @@ export class Api {
 			body: JSON.stringify({
 				text: params.text,
 			}),
-		}).then(this.onResponse);
-	}
-
-	// -------- // --------
-
-	getUserInfo() {
-		return fetch(this.getApiUrl('/users/me'), {
-			headers: this.headers,
 		}).then(this.onResponse);
 	}
 
@@ -107,11 +102,7 @@ export class Api {
 	}
 
 	getAllInfo() {
-		return Promise.all([
-			this.getPostsList(),
-			this.getUserInfo(),
-			this.getReviews(),
-		]);
+		return Promise.all([this.getPostsList(), this.getReviews()]);
 	}
 
 	search(searchQuery: string) {
@@ -203,12 +194,10 @@ export class Api {
 	}
 }
 
-const api = new Api({
-	baseUrl: config.apiUrl,
-	headers: {
-		'content-type': 'application/json',
-		authorization: `Bearer ${config.apiToken}`,
-	},
-});
+const api = (token: string) =>
+	new Api({
+		baseUrl: config.apiUrl,
+		token: token,
+	});
 
 export default api;

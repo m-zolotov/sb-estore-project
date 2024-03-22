@@ -7,6 +7,8 @@ import Product from '../pages/Product';
 import Profile from '../pages/Profile';
 import Favorites from '../pages/Favorites';
 import NotFound from '../pages/NotFound';
+import SignUp from '../pages/SignUp';
+import SignIn from '../pages/SignIn';
 
 export const router = createBrowserRouter([
 	{
@@ -46,6 +48,16 @@ export const router = createBrowserRouter([
 			{
 				path: 'not-found',
 				element: <NotFound />,
+				errorElement: <NotFound />,
+			},
+			{
+				path: 'signup',
+				element: <SignUp />,
+				errorElement: <NotFound />,
+			},
+			{
+				path: 'signin',
+				element: <SignIn />,
 				errorElement: <NotFound />,
 			},
 			{

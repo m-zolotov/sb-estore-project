@@ -1,1 +1,1 @@
-export const sliceName = 'errors';
+export const sliceName = 'alert';

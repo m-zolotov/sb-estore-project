@@ -13,7 +13,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Chip from '@mui/material/Chip';
 import { ThemeProvider, createTheme, styled } from '@mui/material/styles';
-import { useAppDispath, useAppSelector } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { selectUser } from '../../store/user/selectors';
 import { changeProductLike } from '../../store/products/actions';
 import { ICard } from '../../store/models';
@@ -67,7 +67,6 @@ const theme = createTheme({
 		MuiChip: {
 			styleOverrides: {
 				root: {
-					// top: spacing(2),
 					marginLeft: spacing(2),
 				},
 			},
@@ -88,15 +87,6 @@ const theme = createTheme({
 		},
 	},
 });
-
-// const OldPriceWrapper = styled('p')(() => ({
-// 	fontSize: '12px',
-// 	lineHeight: '14px',
-// 	fontWeight: '600',
-// 	marginBottom: 0,
-// 	marginTop: 0,
-// 	color: colors.text.main,
-// }));
 
 const CurrentPriceWrapper = styled('p')(() => ({
 	fontSize: '20px',
@@ -139,7 +129,7 @@ type IFavoritesCardProps = {
 };
 
 export default function FavoritesCard({ card, key }: IFavoritesCardProps) {
-	const dispatch = useAppDispath();
+	const dispatch = useAppDispatch();
 	const user = useAppSelector(selectUser);
 
 	const LinkBehavior = forwardRef<any, Omit<RouterLinkProps, 'to'>>(
@@ -180,7 +170,6 @@ export default function FavoritesCard({ card, key }: IFavoritesCardProps) {
 				/>
 				<CardActionArea component={LinkBehavior}>
 					<CardContent>
-						{/* <OldPriceWrapper>{card.old_price}</OldPriceWrapper> */}
 						<CurrentPriceWrapper>{`${card.price} ₽`}</CurrentPriceWrapper>
 						<WeightWrapper>{card.wight}</WeightWrapper>
 						<HeadingWrapper>{card.name}</HeadingWrapper>

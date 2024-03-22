@@ -8,18 +8,6 @@ import { selectProducts } from '../../store/products/selectors';
 const Catalog = () => {
 	const products = useAppSelector(selectProducts);
 
-	// const [products, setProducts] = useState<ICard[]>([]);
-
-	// useEffect(() => {
-	// 	const filteredData = products.filter((card: ICard) =>
-	// 		card.name
-	// 			.toLowerCase()
-	// 			.toString()
-	// 			.includes(search.toLowerCase().toString())
-	// 	);
-	// 	setProducts(filteredData);
-	// }, []); // TODO: Исправить баг с очищением строки поиска
-
 	return (
 		<Box>
 			<Container>

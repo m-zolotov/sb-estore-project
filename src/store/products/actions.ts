@@ -2,6 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import api from '../../api/api';
 import { addError } from '../errors/actions';
 import { sliceName } from './constants';
+import { RootState } from '../types';
 
 export interface IChangeProductLikeProps {
 	productId: string;
@@ -15,9 +16,11 @@ export interface IDeleteProductProps {
 
 export const getProducts = createAsyncThunk(
 	`${sliceName}/getProducts`,
-	async (args, { dispatch, rejectWithValue }) => {
+	async (args, { dispatch, rejectWithValue, getState }) => {
 		try {
-			const data = await api.getProductsList();
+			const data = await api(
+				(getState() as RootState).user.token
+			).getProductsList();
 			return data;
 		} catch (e) {
 			const text = 'Не удалось загрузить список продуктов';
@@ -29,9 +32,11 @@ export const getProducts = createAsyncThunk(
 
 export const getProduct = createAsyncThunk(
 	`${sliceName}/getProduct`,
-	async (productId: string, { dispatch, rejectWithValue }) => {
+	async (productId: string, { dispatch, rejectWithValue, getState }) => {
 		try {
-			const data = await api.getProductById(productId);
+			const data = await api(
+				(getState() as RootState).user.token
+			).getProductById(productId);
 			return data;
 		} catch (e) {
 			const text = `Не удалось загрузить данные продукта (ID: ${productId})`;
@@ -43,9 +48,11 @@ export const getProduct = createAsyncThunk(
 
 export const deleteProduct = createAsyncThunk(
 	`${sliceName}/deleteProduct`,
-	async (productId: string, { dispatch, rejectWithValue }) => {
+	async (productId: string, { dispatch, rejectWithValue, getState }) => {
 		try {
-			const data = await api.deleteProductById(productId);
+			const data = await api(
+				(getState() as RootState).user.token
+			).deleteProductById(productId);
 			return data;
 		} catch (e) {
 			const text = `Не удалось удалить продукт (ID: ${productId})`;
@@ -57,10 +64,15 @@ export const deleteProduct = createAsyncThunk(
 
 export const changeProductLike = createAsyncThunk(
 	`${sliceName}/changeProductLike`,
-	async (args: IChangeProductLikeProps, { dispatch, rejectWithValue }) => {
+	async (
+		args: IChangeProductLikeProps,
+		{ dispatch, rejectWithValue, getState }
+	) => {
 		const { productId, like } = args;
 		try {
-			const data = await api.changeProductLike(productId, like);
+			const data = await api(
+				(getState() as RootState).user.token
+			).changeProductLike(productId, like);
 			dispatch(getProducts());
 			return data;
 		} catch (e) {
@@ -75,10 +87,15 @@ export const changeProductLike = createAsyncThunk(
 
 export const postReview = createAsyncThunk(
 	`${sliceName}/postReview`,
-	async (args: IDeleteProductProps, { dispatch, rejectWithValue }) => {
+	async (
+		args: IDeleteProductProps,
+		{ dispatch, rejectWithValue, getState }
+	) => {
 		const { productId, text } = args;
 		try {
-			const data = await api.postReviewById({ productId, text });
+			const data = await api(
+				(getState() as RootState).user.token
+			).postReviewById({ productId, text });
 			dispatch(getProduct(productId));
 			return data;
 		} catch (e) {

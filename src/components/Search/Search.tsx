@@ -57,7 +57,6 @@ const Search = () => {
 				<StyledInputBase
 					placeholder='Поиск'
 					inputProps={{ 'aria-label': 'search' }}
-					// onChange={(e: ChangeEvent<HTMLInputElement>) => handleChangeSearch(e)}
 					value={''}
 				/>
 			</SearchComponent>

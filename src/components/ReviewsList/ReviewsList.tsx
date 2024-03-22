@@ -5,7 +5,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
 import Skeleton from '../Skeleton';
 import { IReview } from '../../store/models';
-import { useAppDispath, useAppSelector } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { getProduct } from '../../store/products/actions';
 import { selectProduct } from '../../store/products/selectors';
 
@@ -14,53 +14,50 @@ interface IReviewsListProps {
 }
 
 const ReviewsList = ({ productId }: IReviewsListProps) => {
-	// const user = useAppSelector(selectUser);
-	const dispatch = useAppDispath();
+	const dispatch = useAppDispatch();
 	const product = useAppSelector(selectProduct);
 
 	useEffect(() => {
-		if (productId !== product._id) dispatch(getProduct(productId));
-	}, [productId, dispatch]);
+		if (productId !== product._id) dispatch(getProduct(product._id));
+	}, [productId, product._id, dispatch]);
 
 	return (
-		<>
-			<List>
-				{product.reviews.length ? (
-					product.reviews.map((item: IReview) => (
-						<ListItem key={item._id}>
-							<ListItemText
-								primary={
-									<>
-										<Typography
-											sx={{ display: 'inline' }}
-											component='span'
-											variant='body2'
-											color='text.primary'>
-											{`${item.author.name} ${new Date()
-												.toLocaleDateString()
-												.replaceAll('/', '.')}`}
-										</Typography>
-									</>
-								}
-								secondary={
+		<List>
+			{product.reviews.length ? (
+				product.reviews.map((item: IReview) => (
+					<ListItem key={item._id}>
+						<ListItemText
+							primary={
+								<>
 									<Typography
 										sx={{ display: 'inline' }}
 										component='span'
-										variant='body1'
+										variant='body2'
 										color='text.primary'>
-										{item.text}
+										{`${item.author.name} ${new Date()
+											.toLocaleDateString()
+											.replaceAll('/', '.')}`}
 									</Typography>
-								}
-							/>
-						</ListItem>
-					))
-				) : (
-					<ListItem>
-						<Skeleton />
+								</>
+							}
+							secondary={
+								<Typography
+									sx={{ display: 'inline' }}
+									component='span'
+									variant='body1'
+									color='text.primary'>
+									{item.text}
+								</Typography>
+							}
+						/>
 					</ListItem>
-				)}
-			</List>
-		</>
+				))
+			) : (
+				<ListItem>
+					<Skeleton />
+				</ListItem>
+			)}
+		</List>
 	);
 };
 
